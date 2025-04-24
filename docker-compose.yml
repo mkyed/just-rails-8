@@ -3,16 +3,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    volumes:
+    volumes:  # Single 'volumes' key with all mappings
       - .:/app
       - bundle:/usr/local/bundle
+      - db_data:/app/db
     ports:
       - "3000:3000"
     environment:
       - RAILS_ENV=development
-    # Ensure SQLite database file persists
-    volumes:
-      - db_data:/app/db
 volumes:
   bundle:
   db_data:
