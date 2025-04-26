@@ -33,7 +33,8 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# clean-git?
+
+# need help?
 if [ $help -eq 1 ]; then
   echo "Usage: $0 [--clean-git] [--verbose] [--help]"
   (( verbose == 1 )) && echo "This command resets the docker stuff in the current directory to help in debugging your docker files, possibly cleaning out git changes if your project generates those."
@@ -44,15 +45,6 @@ if [ $help -eq 1 ]; then
   exit 1
 fi
 
-# verbose?
-(( verbose == 1 )) && echo "Verbose mode enabled"
-
-# clean-git?
-if [ $clean_git -eq 1 ]; then
-  (( verbose == 1 )) && echo -n "Cleaning out git..."
-  git clean -f -d
-  (( verbose == 1 )) && echo "done."
-fi
 
 DIR=`pwd`
 NAME=`basename ${DIR}`
@@ -62,15 +54,14 @@ NAME=`basename ${DIR}`
 docker compose down
 (( verbose == 1 )) && echo "done."
 
-(( verbose == 1 )) && echo -n "Running: docker volume rm..."
 volumes=$(docker volume ls -q --filter name=${NAME})
 if [ -z "$volumes" ]; then
   (( verbose == 1 )) && echo "No volumes to remove."
 else
-  (( verbose == 1 )) && echo "Removing volumes: $volumes"
+  (( verbose == 1 )) && echo -n "Removing volumes: $volumes"
   docker volume rm $(docker volume ls -q --filter name=${NAME})
+  (( verbose == 1 )) && echo "done."
 fi
-(( verbose == 1 )) && echo "done."
 
 (( verbose == 1 )) && echo -n "Running: docker network rm..."
 docker network rm ${NAME}_default
@@ -79,6 +70,12 @@ docker network rm ${NAME}_default
 (( verbose == 1 )) && echo -n "Running: docker image rm..."
 docker image rm ${NAME}-web
 (( verbose == 1 )) && echo "done."
+
+if [ $clean_git -eq 1 ]; then
+  (( verbose == 1 )) && echo -n "Cleaning out git..."
+  git clean -ffdx
+  (( verbose == 1 )) && echo "done."
+fi
 
 (( verbose == 1 )) && echo -n "Running: docker compose build..."
 docker compose build
