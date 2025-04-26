@@ -48,36 +48,28 @@ fi
 
 DIR=`pwd`
 NAME=`basename ${DIR}`
-(( verbose == 1 )) && echo "Docker name prefix: ${NAME}"
+(( verbose == 1 )) && echo "### Docker name: ${NAME}"
 
-(( verbose == 1 )) && echo -n "Running: docker compose down..."
+(( verbose == 1 )) && echo "### Running: docker compose down..."
 docker compose down
-(( verbose == 1 )) && echo "done."
 
 volumes=$(docker volume ls -q --filter name=${NAME})
 if [ -z "$volumes" ]; then
-  (( verbose == 1 )) && echo "No volumes to remove."
+  (( verbose == 1 )) && echo "### No volumes to remove."
 else
-  (( verbose == 1 )) && echo -n "Removing volumes: $volumes"
+  (( verbose == 1 )) && echo "### Removing volumes: $volumes"
   docker volume rm $(docker volume ls -q --filter name=${NAME})
-  (( verbose == 1 )) && echo "done."
 fi
 
-(( verbose == 1 )) && echo -n "Running: docker network rm..."
-docker network rm ${NAME}_default
-(( verbose == 1 )) && echo "done."
+(( verbose == 1 )) && echo "### Running: docker network rm..."
+docker network rm ${NAME}_default 2>/dev/null
 
-(( verbose == 1 )) && echo -n "Running: docker image rm..."
-docker image rm ${NAME}-web
-(( verbose == 1 )) && echo "done."
+(( verbose == 1 )) && echo "### Running: docker image rm..."
+docker image rm ${NAME}-web 2>/dev/null
 
 if [ $clean_git -eq 1 ]; then
-  (( verbose == 1 )) && echo -n "Cleaning out git..."
+  (( verbose == 1 )) && echo "### Cleaning out git..."
   git clean -ffdx
-  (( verbose == 1 )) && echo "done."
 fi
 
-(( verbose == 1 )) && echo -n "Running: docker compose build..."
-docker compose build
-(( verbose == 1 )) && echo "done."
 
