@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# initialize a new rails 8 app or start the existing one
+#
 
 if [ ! -d app ]
 then

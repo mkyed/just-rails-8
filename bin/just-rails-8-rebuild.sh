@@ -3,6 +3,7 @@
 # clean out and rebuild the docker image
 #
 
+help=0
 verbose=0
 clean_git=0
 
@@ -17,15 +18,31 @@ while [[ $# -gt 0 ]]; do
             verbose=1
             shift
             ;;
+        --help|-h)
+            help=1
+            shift
+            ;;
         -*)
             echo "Invalid option: $1" >&2
-            exit 1
+            help=1
+            shift
             ;;
         *)
             break
             ;;
     esac
 done
+
+# clean-git?
+if [ $help -eq 1 ]; then
+  echo "Usage: $0 [--clean-git] [--verbose] [--help]"
+  (( verbose == 1 )) && echo "This command resets the docker stuff in the current directory to help in debugging your docker files, possibly cleaning out git changes if your project generates those."
+  (( verbose == 1 )) && echo "Options:"
+  (( verbose == 1 )) && echo "  --clean-git, -cg: clean out git files"
+  (( verbose == 1 )) && echo "  --verbose, -v: enable verbose output"
+  (( verbose == 1 )) && echo "  --help, -h: show this help message"
+  exit 1
+fi
 
 # verbose?
 (( verbose == 1 )) && echo "Verbose mode enabled"
