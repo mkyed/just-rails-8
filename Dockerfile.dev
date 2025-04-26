@@ -1,26 +1,33 @@
 FROM ruby:3.3-slim
 
-# Install system dependencies for Rails, SQLite3, and psych (libyaml)
+# Install system dependencies for Rails, SQLite3, psych, bootsnap, and git
 RUN apt-get update -qq && apt-get install -y \
     build-essential \
     libsqlite3-dev \
     nodejs \
     yarn \
     libyaml-dev \
+    libmsgpack-dev \
+    git-core \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Copy Gemfile and Gemfile.lock to install gems
-COPY Gemfile Gemfile.lock ./
+# Install Rails gem to ensure 'rails' command is available
+RUN gem install rails -v '~> 8.0'
+
+# Copy any existing Gemfile and Gemfile.lock (may be absent)
+COPY Gemfile Gemfile.lock* ./
+
 RUN bundle install
 
-# Copy the rest of the application code
+
+# Copy the rest of the application code (if any)
 COPY . .
 
 # Expose port 3000 for Rails server
 EXPOSE 3000
 
-# Start the Rails server with live reloading
-CMD ["bin/dev"]
+CMD ["./setup.sh"]
+
