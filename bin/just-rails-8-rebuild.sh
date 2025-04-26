@@ -50,7 +50,7 @@ fi
 # clean-git?
 if [ $clean_git -eq 1 ]; then
   (( verbose == 1 )) && echo -n "Cleaning out git..."
-  git clean -fd
+  git clean -f -d
   (( verbose == 1 )) && echo "done."
 fi
 
