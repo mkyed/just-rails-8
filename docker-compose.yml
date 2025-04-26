@@ -3,12 +3,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    volumes:  # Single 'volumes' key with all mappings
+    volumes:
       - .:/app
       - bundle:/usr/local/bundle
       - db_data:/app/db
     ports:
-      - "3000:3000"
+      - "3008:3000"
     environment:
       - RAILS_ENV=development
 volumes:
