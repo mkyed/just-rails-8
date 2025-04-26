@@ -54,8 +54,6 @@ if [ $clean_git -eq 1 ]; then
   (( verbose == 1 )) && echo "done."
 fi
 
-exit 0
-
 DIR=`pwd`
 NAME=`basename ${DIR}`
 (( verbose == 1 )) && echo "Docker name prefix: ${NAME}"
@@ -65,7 +63,13 @@ docker compose down
 (( verbose == 1 )) && echo "done."
 
 (( verbose == 1 )) && echo -n "Running: docker volume rm..."
-docker volume rm $(docker volume ls -q --filter name=${NAME})
+volumes=$(docker volume ls -q --filter name=${NAME})
+if [ -z "$volumes" ]; then
+  (( verbose == 1 )) && echo "No volumes to remove."
+else
+  (( verbose == 1 )) && echo "Removing volumes: $volumes"
+  docker volume rm $(docker volume ls -q --filter name=${NAME})
+fi
 (( verbose == 1 )) && echo "done."
 
 (( verbose == 1 )) && echo -n "Running: docker network rm..."
