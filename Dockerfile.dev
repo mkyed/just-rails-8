@@ -17,17 +17,11 @@ WORKDIR /app
 # Install Rails gem to ensure 'rails' command is available
 RUN gem install rails -v '~> 8.0'
 
-# Copy any existing Gemfile and Gemfile.lock (may be absent)
-COPY Gemfile Gemfile.lock* ./
-
-RUN bundle install
-
-
 # Copy the rest of the application code (if any)
 COPY . .
 
 # Expose port 3000 for Rails server
 EXPOSE 3000
 
-CMD ["./setup.sh"]
+CMD ["bin/just-rails-8-setup.sh"]
 
