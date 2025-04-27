@@ -2,7 +2,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: just-rails-8/Dockerfile
     volumes:
       - .:/app
       - bundle:/usr/local/bundle
