@@ -3,9 +3,8 @@ FROM ruby:3.3-slim
 # Install system dependencies for Rails, SQLite3, psych, bootsnap, and git
 RUN apt-get update -qq && apt-get install -y \
     build-essential \
-    libsqlite3-dev \
-    nodejs \
-    yarn \
+    sqlite3 libsqlite3-dev \
+    nodejs yarn libvips imagemagick \
     libyaml-dev \
     libmsgpack-dev \
     git-core \
@@ -23,5 +22,5 @@ COPY . .
 # Expose port 3000 for Rails server
 EXPOSE 3000
 
-CMD ["bin/just-rails-8-setup.sh"]
+CMD ["just-rails-8/setup.sh"]
 
