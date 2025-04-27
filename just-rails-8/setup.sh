@@ -5,8 +5,8 @@
 
 if [ ! -d app ]
 then
-  rails new . --database=sqlite3 --force --quiet
-  bundle exec rails db:setup 
+  rails new . -m https://raw.githubusercontent.com/maglevhq/maglev-core/master/template.rb \
+    --database=sqlite3 --skip-action-cable
 fi
 
 bundle exec rails server -b 0.0.0.0
