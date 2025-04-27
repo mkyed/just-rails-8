@@ -76,14 +76,14 @@ Key files in JustRails8:
 
 - **`docker-compose.yml`**: Defines the Docker Compose service for the Rails app, including volumes for the app code, Ruby gems, and SQLite database, and maps port `3008` to `3000`.
 - **`Dockerfile.dev`**: Configures the development Docker image with Ruby 3.3, Rails 8, and necessary system dependencies (e.g., SQLite3, Node.js, Yarn).
-- **`bin/just-rails-8-setup.sh`**: Initializes a new Rails 8 app (if none exists) with SQLite3 and starts the server. Run automatically by `docker compose up`.
-- **`bin/just-rails-8-reset.sh`**: Cleans up Docker resources (images, volumes, networks) for debugging or resetting the environment. Optional flags:
+- **`just-rails-8/setup.sh`**: Initializes a new Rails 8 app (if none exists) with SQLite3 and starts the server. Run automatically by `docker compose up`.
+- **`just-rails-8/reset.sh`**: Cleans up Docker resources (images, volumes, networks) for debugging or resetting the environment. Optional flags:
   - `--clean-git` or `-cg`: Removes Git-related files (use with caution).
   - `--verbose` or `-v`: Shows detailed output.
   - `--help` or `-h`: Displays usage information.
   - Example:
     ```bash
-    ./bin/just-rails-8-reset.sh --verbose
+    ./just-rails-8/reset.sh --verbose
     ```
 
 ## Usage Tips
@@ -91,11 +91,11 @@ Key files in JustRails8:
 - **Customizing the Rails App**: After the initial setup, the Rails app is generated in the project directory. Modify it as you would any Rails app (e.g., add gems to `Gemfile`, create controllers, or update routes).
 - **Rebuilding the Image**: If you modify `Dockerfile.dev` or encounter issues, reset the environment:
      ```bash
-     ./bin/just-rails-8-reset.sh
+     ./just-rails-8/reset.sh
      docker compose up --build
      ```
 - **Port Conflicts**: If port `3008` is in use, edit `docker-compose.yml` to map a different host port (e.g., `3010:3000`).
-- **Database Persistence**: The SQLite database is stored in the `db_data` volume, so it persists between container restarts. To start fresh, reset with `./bin/just-rails-8-reset.sh`.
+- **Database Persistence**: The SQLite database is stored in the `db_data` volume, so it persists between container restarts. To start fresh, reset with `./just-rails-8/reset.sh`.
 
 ## Why Reset the Git Connection?
 
