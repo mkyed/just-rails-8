@@ -4,7 +4,7 @@ FROM ruby:3.3-slim
 RUN apt-get update -qq && apt-get install -y \
     build-essential \
     sqlite3 libsqlite3-dev \
-    nodejs yarn libvips imagemagick \
+    nodejs libvips imagemagick \
     libyaml-dev \
     libmsgpack-dev \
     git-core \
