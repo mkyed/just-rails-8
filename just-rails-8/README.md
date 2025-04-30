@@ -2,6 +2,12 @@
 
 JustRails8 is a minimal, vanilla Rails 8 development environment designed to get you up and running quickly with Docker Compose. It provides a clean Rails 8 setup in a containerized environment, allowing you to edit files locally with your favorite editor and start the app with a simple `docker compose up`. This project is ideal for starting new Rails 8 projects or experimenting with Rails 8 in a lightweight, reproducible setup.
 
+
+This project supports two flavors:
+- **Vanilla**: A minimal Rails 8 app with SQLite, ideal for lightweight projects or learning.
+- **Maglev CMS**: A Rails 8 app integrated with Maglev CMS for content management, including media handling and pre-designed UI components.
+
+
 ## Purpose
 
 The goal of JustRails8 is simplicity and flexibility:
@@ -46,7 +52,7 @@ Follow these steps to set up and run JustRails8:
      ```
 
 3. **Start the Docker Environment**
-   - Run the following command to build and start the Rails 8 app in a Docker container:
+   - Run the following command to build and start the vanilla Rails 8 app in a Docker container:
      ```bash
      docker compose up
      ```
@@ -55,6 +61,10 @@ Follow these steps to set up and run JustRails8:
      - Creates a fresh Rails 8 app (if none exists) using SQLite3.
      - Sets up the database with `rails db:setup`.
      - Starts the Rails server on port `3008` (mapped to `3000` inside the container).
+  - To use the maglev flavor:
+     ```bash
+     JR8_FLAVOR=maglev docker compose up
+     ```
 
 4. **Access the App**
    - Open your browser and navigate to `http://localhost:3008` to see the Rails welcome page.
