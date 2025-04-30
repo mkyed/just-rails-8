@@ -10,7 +10,9 @@ services:
     ports:
       - "3008:3000"
     environment:
-      - RAILS_ENV=development
+    - RAILS_ENV=development
+    - JR8_FLAVOR=${JR8_FLAVOR:-vanilla}  # Default to vanilla if not set
+
 volumes:
   bundle:
   db_data:

@@ -1,10 +1,10 @@
 FROM ruby:3.3-slim
 
-# Install system dependencies for Rails, SQLite3, psych, bootsnap, and git
+# Install system dependencies for Rails
 RUN apt-get update -qq && apt-get install -y \
-    build-essential \
+    build-essential curl \
     sqlite3 libsqlite3-dev \
-    nodejs libvips imagemagick \
+    libvips \
     libyaml-dev \
     libmsgpack-dev \
     git-core \
