@@ -21,17 +21,13 @@ maglev() {
   apt install -y nodejs
   npm install -g yarn
 
-  gem install just-rails-8/maglevcms-2.0.0.gem
 
   rails new . --database=sqlite3 --skip-action-cable
 
-  bundle add maglevcms -v '~> 2.0.0'
+  bundle add maglevcms --github 'maglevhq/maglev-core'
   bundle add maglevcms-hyperui-kit -v '~> 1.2.0'
   bundle add image_processing
   bundle install
-
-  grep cms Gemfile
-  grep cms Gemfile.lock
 
   bundle exec rails db:create
   bundle exec rails active_storage:install
