@@ -21,7 +21,6 @@ maglev() {
   apt install -y nodejs
   npm install -g yarn
 
-
   rails new . --database=sqlite3 --skip-action-cable
 
   bundle add maglevcms --github 'maglevhq/maglev-core'
