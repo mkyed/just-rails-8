@@ -70,15 +70,6 @@ docker image rm ${NAME}-web 2>/dev/null
 if [ $clean_untracked -eq 1 ]; then
   (( verbose == 1 )) && echo "### Removing all untracked files and directories..."
   git clean -ffdx
-else
-  # Only remove specific Rails-generated files when not doing full cleanup
-  RAILS_FILES=".dockerignore .gitattributes .github .gitignore .kamal .rubocop.yml .ruby-version"
-  for file in $RAILS_FILES; do
-    if [ -e "$file" ]; then
-      (( verbose == 1 )) && echo "### Removing Rails file: $file"
-      rm -rf "$file"
-    fi
-  done
 fi
 
 # Revert README.md changes if it was overwritten by Rails
