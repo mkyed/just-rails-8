@@ -72,7 +72,7 @@ if [ $clean_untracked -eq 1 ]; then
   git clean -ffdx
 else
   # Only remove specific Rails-generated files when not doing full cleanup
-  RAILS_FILES=".dockerignore .gitattributes .github .gitignore .kamal .rubocop.yml .ruby-version .claude"
+  RAILS_FILES=".dockerignore .gitattributes .github .gitignore .kamal .rubocop.yml .ruby-version"
   for file in $RAILS_FILES; do
     if [ -e "$file" ]; then
       (( verbose == 1 )) && echo "### Removing Rails file: $file"
