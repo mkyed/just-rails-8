@@ -1,24 +1,12 @@
-# README
+**Temporary README**
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This README will be replaced by Rails while installing.
 
-Things you may want to cover:
+See [the one in the just-rails-8 folder](just-rails-8/README.md) for the README for this project.
 
-* Ruby version
 
-* System dependencies
+# Just Rails 8
 
-* Configuration
+A Ruby on Rails 8 application template supporting minimal ("vanilla") and Maglev CMS setups.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+**Note**: This file is overwritten during Rails installation. For detailed setup, features, and usage instructions, see the main documentation in [`just-rails-8/README.md`](just-rails-8/README.md).
