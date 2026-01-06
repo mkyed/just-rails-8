@@ -15,7 +15,7 @@ The project uses a containerized approach where the actual Rails application is 
 
 - `docker-compose.yml`: Main Docker Compose configuration
 - `just-rails-8/`: Contains setup files for the containerized environment
-  - `Dockerfile`: Ruby 3.3 image with Rails 8 and dependencies
+  - `Dockerfile`: Ruby 4.0 image with Rails 8.1 and dependencies
   - `setup.sh`: Initializes new Rails app or starts existing one
   - `reset.sh`: Cleans Docker resources and removes untracked files
 
@@ -87,15 +87,15 @@ docker compose exec web bundle install
 ### Maglev Setup  
 - Installs Node.js and Yarn
 - Creates Rails app with SQLite
-- Adds MaglevCMS 2.0.0 (latest stable version with SQLite3 support)
+- Adds MaglevCMS 2.1.0 (latest stable version with SQLite3 support)
 - Adds Maglev HyperUI Kit
 - Installs Active Storage and image processing
 - Runs Maglev generators and site creation
 
 ## Important Notes
 
-- **MaglevCMS Version**: Updated to use version 2.0.0 (latest stable) with official SQLite3 support
-- **Database Compatibility**: MaglevCMS 2.0.0 officially supports SQLite3 as an alternative to PostgreSQL
+- **MaglevCMS Version**: Updated to use version 2.1.0 (latest stable) with official SQLite3 support
+- **Database Compatibility**: MaglevCMS 2.1.0 officially supports SQLite3 as an alternative to PostgreSQL
 - **Volume Management**: When switching between flavors, clean the environment with `reset.sh` to avoid gem conflicts
 - **Generated Files**: The Rails app is generated in the project root and persisted via volume mounts
 - **Reset Script**: Use `--clean-untracked` flag to remove all untracked files including Rails residue

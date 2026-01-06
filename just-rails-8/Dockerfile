@@ -1,4 +1,4 @@
-FROM ruby:3.3-slim
+FROM ruby:4.0-slim
 
 # Install system dependencies for Rails
 RUN apt-get update -qq && apt-get install -y \
@@ -14,7 +14,7 @@ RUN apt-get update -qq && apt-get install -y \
 WORKDIR /app
 
 # Install Rails gem to ensure 'rails' command is available
-RUN gem install rails -v '~> 8.0'
+RUN gem install rails -v '~> 8.1'
 
 # Copy the rest of the application code (if any)
 COPY . .
