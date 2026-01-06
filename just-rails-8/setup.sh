@@ -8,7 +8,9 @@ vanilla() {
   echo "### Installing vanilla Rails 8      ###"
   echo "#######################################"
 
+  cp README.md README.md.bak 2>/dev/null || true
   rails new . --database=sqlite3 --skip-action-cable
+  mv README.md.bak README.md 2>/dev/null || true
   bundle exec rails db:setup
 }
 
@@ -21,7 +23,9 @@ maglev() {
   apt install -y nodejs
   npm install -g yarn
 
+  cp README.md README.md.bak 2>/dev/null || true
   rails new . --database=sqlite3 --skip-action-cable
+  mv README.md.bak README.md 2>/dev/null || true
 
   bundle add maglevcms -v '~> 2.1.0'
   bundle add maglevcms-hyperui-kit -v '~> 1.2.0'
