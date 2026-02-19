@@ -8,9 +8,7 @@ vanilla() {
   echo "### Installing vanilla Rails 8      ###"
   echo "#######################################"
 
-  cp README.md README.md.bak 2>/dev/null || true
-  rails new . --database=sqlite3 --skip-action-cable
-  mv README.md.bak README.md 2>/dev/null || true
+  rails new . --database=sqlite3 --skip-action-cable --force
   bundle exec rails db:setup
 }
 
@@ -21,10 +19,9 @@ maglev() {
 
   curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
   apt-get install -y nodejs
+  corepack enable
 
-  cp README.md README.md.bak 2>/dev/null || true
-  rails new . --database=sqlite3 --skip-action-cable
-  mv README.md.bak README.md 2>/dev/null || true
+  rails new . --database=sqlite3 --skip-action-cable --force
 
   bundle add maglevcms -v '~> 2.1.0'
   bundle add maglevcms-hyperui-kit -v '~> 1.3.0'
