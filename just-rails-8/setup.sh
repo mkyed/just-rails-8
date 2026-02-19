@@ -20,8 +20,7 @@ maglev() {
   echo "#######################################"
 
   curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
-  apt install -y nodejs
-  npm install -g yarn
+  apt-get install -y nodejs
 
   cp README.md README.md.bak 2>/dev/null || true
   rails new . --database=sqlite3 --skip-action-cable
@@ -29,7 +28,6 @@ maglev() {
 
   bundle add maglevcms -v '~> 2.1.0'
   bundle add maglevcms-hyperui-kit -v '~> 1.3.0'
-  bundle add image_processing
   bundle install
 
   bundle exec rails db:create
