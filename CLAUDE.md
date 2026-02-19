@@ -85,10 +85,10 @@ docker compose exec web bundle install
 - Runs `rails db:setup`
 
 ### Maglev Setup  
-- Installs Node.js and Yarn
+- Installs Node.js 22 LTS and Yarn
 - Creates Rails app with SQLite
 - Adds MaglevCMS 2.1.0 (latest stable version with SQLite3 support)
-- Adds Maglev HyperUI Kit
+- Adds Maglev HyperUI Kit 1.3
 - Installs Active Storage and image processing
 - Runs Maglev generators and site creation
 
@@ -114,7 +114,5 @@ The `reset.sh` script provides comprehensive cleanup:
 - **Help**: `./just-rails-8/reset.sh --help` for usage information
 
 The script automatically:
-- Reverts README.md if overwritten by Rails
-- Removes common Rails-generated files
 - Cleans Docker containers, volumes, and images
-- Optionally removes all untracked files with `--clean-untracked`
+- Optionally removes all untracked files and restores all tracked files to their committed state with `--clean-untracked`

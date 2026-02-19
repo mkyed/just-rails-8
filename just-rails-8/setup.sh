@@ -19,7 +19,7 @@ maglev() {
   echo "## Installing Maglev CMS on Rails 8 ###"
   echo "#######################################"
 
-  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+  curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
   apt install -y nodejs
   npm install -g yarn
 
@@ -28,7 +28,7 @@ maglev() {
   mv README.md.bak README.md 2>/dev/null || true
 
   bundle add maglevcms -v '~> 2.1.0'
-  bundle add maglevcms-hyperui-kit -v '~> 1.2.0'
+  bundle add maglevcms-hyperui-kit -v '~> 1.3.0'
   bundle add image_processing
   bundle install
 
