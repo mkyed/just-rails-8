@@ -16,7 +16,9 @@ WORKDIR /app
 
 # Install Rails gem to ensure 'rails' command is available
 RUN gem install rails -v '~> 8.1'
-RUN rm -f /usr/local/lib/ruby/gems/4.0.0/specifications/default/rdoc-*.gemspec
+RUN rm -rf /usr/local/lib/ruby/gems/4.0.0/specifications/default/rdoc-*.gemspec \
+           /usr/local/lib/ruby/gems/4.0.0/gems/rdoc-* \
+           /usr/local/lib/ruby/gems/4.0.0/plugins/rdoc_plugin.rb
 
 # Copy the rest of the application code (if any)
 COPY . .
