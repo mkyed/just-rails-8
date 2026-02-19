@@ -70,15 +70,8 @@ docker image rm ${NAME}-web 2>/dev/null
 if [ $clean_untracked -eq 1 ]; then
   (( verbose == 1 )) && echo "### Removing all untracked files and directories..."
   git clean -ffdx
-fi
-
-# Revert README.md changes if it was overwritten by Rails
-if [ -f README.md ]; then
-  # Check if README.md contains Rails default content
-  if grep -q "This README would normally document whatever steps are necessary" README.md; then
-    (( verbose == 1 )) && echo "### Reverting README.md changes..."
-    git checkout README.md 2>/dev/null || true
-  fi
+  (( verbose == 1 )) && echo "### Restoring all tracked files to their committed state..."
+  git checkout .
 fi
 
 
