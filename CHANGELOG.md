@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-03-24
+
+### Security
+
+- Updated Rails to 8.1.2.1 patching 10 CVEs (path traversal, XSS, DoS)
+
+### Changed
+
+- Updated MaglevCMS HyperUI Kit to 2.0
+- Added VITE_RUBY_SKIP_COMPATIBILITY_CHECK for Vite compat workaround
+
 ## [2.1.0] - 2026-02-19
 
 ### Changed
