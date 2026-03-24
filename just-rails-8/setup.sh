@@ -24,7 +24,7 @@ maglev() {
   rails new . --database=sqlite3 --skip-action-cable --force
 
   bundle add maglevcms -v '~> 2.1.0'
-  bundle add maglevcms-hyperui-kit -v '~> 1.3.0'
+  bundle add maglevcms-hyperui-kit -v '~> 2.0.0'
   bundle install
 
   bundle exec rails db:create

@@ -12,6 +12,7 @@ services:
     environment:
     - RAILS_ENV=development
     - JR8_FLAVOR=${JR8_FLAVOR:-vanilla}  # Default to vanilla if not set
+    - VITE_RUBY_SKIP_COMPATIBILITY_CHECK=true
 
 volumes:
   bundle:

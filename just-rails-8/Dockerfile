@@ -15,7 +15,7 @@ RUN apt-get update -qq && apt-get install -y \
 WORKDIR /app
 
 # Install Rails gem to ensure 'rails' command is available
-RUN gem install rails -v '~> 8.1'
+RUN gem install rails -v '~> 8.1.2.1'
 RUN rm -rf /usr/local/lib/ruby/gems/4.0.0/specifications/default/rdoc-*.gemspec \
            /usr/local/lib/ruby/gems/4.0.0/gems/rdoc-* \
            /usr/local/lib/ruby/gems/4.0.0/plugins/rdoc_plugin.rb
