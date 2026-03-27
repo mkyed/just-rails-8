@@ -32,6 +32,12 @@ maglev() {
   bundle exec rails db:migrate
   bundle exec rails g maglev:install
   bundle exec rails g maglev:hyperui:install --force
+
+  # HyperUI Kit 2.0 generates maglev_client_javascript_tags which doesn't
+  # exist in MaglevCMS 2.1.0. Replace with the correct helper.
+  sed -i 's/maglev_client_javascript_tags/maglev_live_preview_client_javascript_tag/' \
+    app/views/theme/layout.html.erb
+
   bundle exec rails maglev:create_site
 }
 
