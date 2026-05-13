@@ -94,10 +94,10 @@ docker compose exec web bundle install
 
 ## Important Notes
 
-- **MaglevCMS Version**: Uses version 2.1.0 (latest stable) with official SQLite3 support
-- **MaglevCMS HyperUI Kit**: Updated to 2.0 with vite_ruby pinned to ~> 3.9.0 (3.10.0 has compatibility check that rejects vite-plugin-ruby ^5.1.0)
+- **MaglevCMS Version**: Uses version 3.0.1 (latest stable) with official SQLite3 support
+- **MaglevCMS HyperUI Kit**: Uses 2.0.0 (compatible with MaglevCMS 3.x)
 - **Rails Version**: Pinned to ~> 8.1.3
-- **Database Compatibility**: MaglevCMS 2.1.0 officially supports SQLite3 as an alternative to PostgreSQL
+- **Database Compatibility**: MaglevCMS 3.0.x supports SQLite3 as an alternative to PostgreSQL
 - **Volume Management**: When switching between flavors, clean the environment with `reset.sh` to avoid gem conflicts
 - **Generated Files**: The Rails app is generated in the project root and persisted via volume mounts
 - **Reset Script**: Use `--clean-untracked` flag to remove all untracked files including Rails residue

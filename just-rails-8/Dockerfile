@@ -1,4 +1,4 @@
-FROM ruby:4.0-slim
+FROM ruby:4.0.3-slim
 
 # Install system dependencies for Rails
 ENV DEBIAN_FRONTEND=noninteractive

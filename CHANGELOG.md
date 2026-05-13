@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated Ruby image to 4.0.3 (pinned patch version)
+- Updated MaglevCMS to 3.0.1 (major version — new `maglev:publish_site` step required)
+- Dropped sed workaround for `maglev_client_javascript_tags` (now the canonical helper in 3.x)
+
+### Added
+
+- GitHub Actions CI workflow testing both flavors from scratch to browsable website
+- Local `just-rails-8/test.sh` for end-to-end flavor testing
+
 ## [2.2.0] - 2026-03-24
 
 ### Security

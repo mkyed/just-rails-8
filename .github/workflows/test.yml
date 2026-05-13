@@ -1,0 +1,56 @@
+name: Flavor Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        flavor: [vanilla, maglev]
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build ${{ matrix.flavor }} image
+        run: docker compose build
+        env:
+          JR8_FLAVOR: ${{ matrix.flavor }}
+
+      - name: Start ${{ matrix.flavor }} app
+        run: docker compose up -d
+        env:
+          JR8_FLAVOR: ${{ matrix.flavor }}
+
+      - name: Wait for app to be available (up to 8 min)
+        timeout-minutes: 8
+        run: |
+          until curl -sf http://localhost:3008 -o /dev/null; do
+            sleep 5
+          done
+
+      - name: Root page returns HTTP 200
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3008)
+          echo "HTTP status: $STATUS"
+          [ "$STATUS" = "200" ]
+
+      - name: Maglev editor is accessible
+        if: matrix.flavor == 'maglev'
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -L http://localhost:3008/maglev)
+          echo "Maglev editor HTTP status: $STATUS"
+          [ "$STATUS" = "200" ] || [ "$STATUS" = "302" ]
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs
+
+      - name: Stop containers
+        if: always()
+        run: docker compose down -v
