@@ -1,3 +1,8 @@
-# Claude Code files
-.claude/
-CLAUDE.md
+# Claude Code state — ignore most entries in .claude/ but keep skills and CLAUDE.md tracked
+.claude/*
+!.claude/CLAUDE.md
+!.claude/skills/
+!.claude/skills/**
+
+# Ephemeral artefact from the daily-update-check cron run
+versions.md
