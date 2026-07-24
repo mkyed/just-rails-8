@@ -1,6 +1,6 @@
 ---
 name: daily-update-check
-description: Daily procedure for discovering, validating, and bumping upstream dependency versions in the JustRails8 bootstrapper (Rails, Ruby, MaglevCMS, HyperUI, Node.js, Yarn, system packages). Invoked by the daily cron via `claude -p "run the daily update check"`.
+description: Daily procedure for discovering, validating, and bumping upstream dependency versions in the JustRails8 bootstrapper (Rails, Ruby, MaglevCMS, HyperUI, Node.js, Yarn, system packages), then cutting a patch-level GitHub release for applied bumps. Invoked by the daily cron via `claude -p "run the daily update check"`.
 triggers:
   - "run the daily update check"
   - "check for dependency updates"
@@ -74,19 +74,49 @@ For each auto-eligible bump:
    ./just-rails-8/test.sh
    ```
    `test.sh` exercises both flavors (vanilla and maglev), waits up to 480s for boot, and asserts HTTP 200 on root plus maglev editor reachability.
-3. If test passes:
+3. If test passes — commit **path-limited** (never `git add -A`; a concurrent session's staged work must not get swept in):
    ```bash
-   git add -A
-   git commit -m "chore(deps): bump <name> <old> → <new>
+   git commit just-rails-8/Dockerfile just-rails-8/setup.sh .claude/skills/daily-update-check/SKILL.md \
+     -m "chore(deps): bump <name> <old> → <new>
 
    Verified via ./just-rails-8/test.sh — both flavors pass."
-   git push
+   git push gitlab master
+   git push github master
    ```
-4. If test fails: revert the edit (`git checkout -- <file>`) and proceed to Step 5.
+   (Omit paths that weren't touched. Remember to update the pin table in this SKILL.md as part of the same commit. See "Push transport" below — never push over SSH from a headless run.)
+4. If test fails: revert the edit (`git checkout -- <file>`) and proceed to Step 6.
 
-### Step 5 — Report blockers
+### Step 5 — Cut a GitHub release (only when bumps were applied)
 
-If any bump fails tests or requires human review, append a section to `versions.md`:
+Every applied auto-eligible bump is patch-level by definition (minor/major bumps require human review), so the automated release is always a **patch** bump of the last tag.
+
+1. Determine the new version: `git tag --sort=-v:refname | head -1`, increment the patch (e.g. `v3.1.0` → `v3.1.1`).
+2. Add a section to `CHANGELOG.md` above the previous release, matching the existing Keep-a-Changelog style:
+   ```markdown
+   ## [X.Y.Z] - <today>
+
+   ### Changed
+
+   - Updated <name> to <new version>
+   ```
+3. Commit and tag:
+   ```bash
+   git commit CHANGELOG.md -m "Release vX.Y.Z"
+   git tag vX.Y.Z
+   git push gitlab master --tags
+   git push github master --tags
+   ```
+4. Create the GitHub release (title style matches existing releases, e.g. "v3.0.0 - MaglevCMS 3.0, Ruby 4.0.3, CI Tests"):
+   ```bash
+   gh release create vX.Y.Z --title "vX.Y.Z - <short summary of the bumps>" \
+     --notes "<the CHANGELOG section body for this version>"
+   ```
+
+Releases for human-reviewed (minor/major) bumps are cut manually by Michael, not by this skill.
+
+### Step 6 — Report blockers
+
+If any bump fails tests or requires human review, append a section to `versions.md`. Write this file only **now**, at the end of the run — `reset.sh --clean-untracked` runs `git clean -ffdx`, which deletes gitignored files, so anything written to `versions.md` before Step 4 is lost. Keep working notes in the session scratchpad until this point.
 
 ```
 ## <date>
@@ -96,11 +126,25 @@ If any bump fails tests or requires human review, append a section to `versions.
 - Node   22.12.0 → 22.13.0 — BLOCKED: nodesource setup_22.x script returns 404 for 22.13
 ```
 
-### Step 6 — Cleanup
+### Step 7 — Cleanup
 
 Remove the ephemeral `versions.md` unless blockers were recorded. If blockers exist, leave it for the next run to append to.
 
-Run `git status` to confirm working tree is clean (all applied bumps committed and pushed).
+Run `git status` to confirm working tree is clean, and `git log gitlab/master..master --oneline` / `git log github/master..master --oneline` to confirm **both remotes** received every commit. Unpushed commits are a failed run — report them, don't leave them silently stranded.
+
+## Push transport (headless-safe)
+
+The SSH key (`~/.ssh/id_rsa`) is passphrase-locked and is **never** available in a headless cron run — do not push over SSH, and do not retry SSH failures. Both remotes are configured for HTTPS with token auth instead:
+
+- `github` → `https://github.com/mkyed/just-rails-8.git`, credentials via `gh` (`gh auth setup-git` wired the credential helper; token lives in the keyring). `gh release create` uses the same token.
+- `gitlab` → `https://gitlab.com/mkyed/just-rails-8.git`, credentials via a repo-local credential helper (`.git/config`) that sources `GITLAB_TOKEN` from `~/.secrets` at push time.
+
+If a plain `git push gitlab master` or `git push github master` fails with an auth error, the transport wiring is broken — report it as a blocker, don't work around it. After a fresh clone, re-run:
+
+```bash
+git config credential."https://gitlab.com".helper \
+  '!f(){ . ~/.secrets; echo username=oauth2; echo password=$GITLAB_TOKEN; };f'
+```
 
 ## Abort conditions
 
@@ -120,10 +164,9 @@ Stop and surface to the user (via stdout — the cron log) if:
 
 ## Verification that the skill is working
 
-After the first cron run, expect a commit like:
+After a cron run that found an eligible bump, expect:
 
-```
-chore(deps): bump maglevcms 3.0.0 → 3.0.1
-```
+- a `chore(deps): bump …` commit AND a `Release vX.Y.Z` commit, both present on `gitlab/master` and `github/master`
+- a `vX.Y.Z` tag and a matching GitHub release (`gh release list`)
 
-if an eligible bump was found, or a clean working tree with a short `versions.md` artifact otherwise.
+After a run with no updates: a clean working tree, both remotes even with local master, no new tag. A run that commits but leaves either remote behind is a **failed** run.
