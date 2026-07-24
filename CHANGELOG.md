@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-07-24
+
+### Changed
+
+- Updated Ruby image to 4.0.6
+- Loosened Rails pin to `~> 8.1` so generated apps track the latest 8.1.x patch release
+
+### Added
+
+- Daily automated dependency update check (`.claude/skills/daily-update-check`) that bumps upstream pins, verifies both flavors via `test.sh`, and cuts patch-level releases
+
 ## [3.0.0] - 2026-05-13
 
 ### Changed
