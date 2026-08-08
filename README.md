@@ -23,7 +23,7 @@ Open http://localhost:3008 - done!
 - **Ruby 4.0 + Rails 8.1** - Latest stable versions
 - **Two Flavors**:
   - **Vanilla**: Minimal Rails 8 with SQLite
-  - **Maglev CMS**: Rails 8 with [MaglevCMS 2.1](https://www.maglev.dev/) website builder
+  - **Maglev CMS**: Rails 8 with [MaglevCMS 3.1](https://www.maglev.dev/) website builder
 - **Local Editing** - Files mounted as volumes, edit with your favorite IDE
 - **Persistent Data** - Database and gems cached between restarts
 

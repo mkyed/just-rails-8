@@ -87,17 +87,17 @@ docker compose exec web bundle install
 ### Maglev Setup  
 - Installs Node.js 22 LTS and Yarn
 - Creates Rails app with SQLite
-- Adds MaglevCMS 2.1.0 (latest stable version with SQLite3 support)
-- Adds Maglev HyperUI Kit 1.3
+- Adds MaglevCMS 3.1.0 (latest stable version with SQLite3 support)
+- Adds Maglev HyperUI Kit 2.0
 - Installs Active Storage and image processing
 - Runs Maglev generators and site creation
 
 ## Important Notes
 
-- **MaglevCMS Version**: Uses version 3.0.1 (latest stable) with official SQLite3 support
+- **MaglevCMS Version**: Uses version 3.1.0 (latest stable) with official SQLite3 support
 - **MaglevCMS HyperUI Kit**: Uses 2.0.0 (compatible with MaglevCMS 3.x)
 - **Rails Version**: Pinned to ~> 8.1.3
-- **Database Compatibility**: MaglevCMS 3.0.x supports SQLite3 as an alternative to PostgreSQL
+- **Database Compatibility**: MaglevCMS 3.x supports SQLite3 as an alternative to PostgreSQL
 - **Volume Management**: When switching between flavors, clean the environment with `reset.sh` to avoid gem conflicts
 - **Generated Files**: The Rails app is generated in the project root and persisted via volume mounts
 - **Reset Script**: Use `--clean-untracked` flag to remove all untracked files including Rails residue
