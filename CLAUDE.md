@@ -85,7 +85,7 @@ docker compose exec web bundle install
 - Runs `rails db:setup`
 
 ### Maglev Setup  
-- Installs Node.js 22 LTS and Yarn
+- Installs Node.js 24 LTS and Yarn
 - Creates Rails app with SQLite
 - Adds MaglevCMS 3.1.0 (latest stable version with SQLite3 support)
 - Adds Maglev HyperUI Kit 2.0
