@@ -21,7 +21,7 @@ Dependencies this bootstrapper pins (and the files that pin them):
 | Rails gem                     | `~> 8.1`                          | `just-rails-8/Dockerfile` line 18 |
 | MaglevCMS                     | `~> 3.1.0`                        | `just-rails-8/setup.sh` line 26   |
 | MaglevCMS HyperUI Kit         | `~> 2.0.0`                        | `just-rails-8/setup.sh` line 27   |
-| Node.js (apt via nodesource)  | `22.x` LTS                        | `just-rails-8/setup.sh` line 20   |
+| Node.js (apt via nodesource)  | `24.x` LTS                        | `just-rails-8/setup.sh` line 20   |
 | Yarn (global npm)             | latest (no pin)                   | `just-rails-8/setup.sh` line 22   |
 | system apt packages           | `sqlite3 libsqlite3-dev libvips libyaml-dev libmsgpack-dev build-essential git-core` | `just-rails-8/Dockerfile` lines 5–12 |
 | rdoc gem path cleanup         | `4.0.0` (Ruby ABI)                | `just-rails-8/Dockerfile` lines 19–21 |
@@ -42,7 +42,7 @@ Run each check command and capture its output. Keep a `versions.md` in the repo 
 | Ruby image tag  | `curl -s 'https://registry.hub.docker.com/v2/repositories/library/ruby/tags/?page_size=25&name=4.0' \| jq -r '.results[].name' \| grep -E '^4\.0\.[0-9]+-slim$' \| sort -V \| tail -1` |
 | MaglevCMS       | `gem search maglevcms --remote --exact` |
 | Maglev-HyperUI  | `gem search maglevcms-hyperui-kit --remote --exact` |
-| Node.js 22 LTS  | `curl -s https://nodejs.org/dist/index.json \| jq -r '[.[] \| select(.version \| startswith("v22."))] \| first \| .version'` |
+| Node.js 24 LTS  | `curl -s https://nodejs.org/dist/index.json \| jq -r '[.[] \| select(.version \| startswith("v24."))] \| first \| .version'` |
 | Yarn            | `npm view yarn version` |
 
 ### Step 2 — Diff against the table above
