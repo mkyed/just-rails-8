@@ -17,7 +17,7 @@ Dependencies this bootstrapper pins (and the files that pin them):
 
 | Dependency                    | Current pin                       | Pinned in                         |
 |-------------------------------|-----------------------------------|-----------------------------------|
-| Ruby base image               | `ruby:4.0.8-slim`                 | `just-rails-8/Dockerfile` line 1  |
+| Ruby base image               | `ruby:4.0.9-slim`                 | `just-rails-8/Dockerfile` line 1  |
 | Rails gem                     | `~> 8.1`                          | `just-rails-8/Dockerfile` line 18 |
 | MaglevCMS                     | `~> 3.1.0`                        | `just-rails-8/setup.sh` line 26   |
 | MaglevCMS HyperUI Kit         | `~> 2.0.0`                        | `just-rails-8/setup.sh` line 27   |
